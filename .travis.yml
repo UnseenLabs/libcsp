@@ -1,0 +1,6 @@
+langage: c
+
+script:
+   - ./waf configure --with-os=posix --with-driver-usart=linux  --enable-rdp
+   - ./waf build
+ 
