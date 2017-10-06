@@ -1,5 +1,23 @@
 langage: c
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "a2Ffofips/GVFlaPZdKVgbFSTcd1AJDIRVOtf2UH/ILJz9JsJfQyQvvDMIkKw07LCam4FXoYcn8jGktK6VvT9NPIWEq3C63t3XNoM562f0hIC0C27aI3b19JTLlRwlzEtNvTmp0aJ1NQcGOu+qqm7jRFFi7kQlhZTZgIAFGBRwnvXbluCNHfZ73n9ig/ehMF9VuQr67apraUANvOZwnep/7/PhLt4g7lPQ6BnMLY6LB3Vd4WI1JPi9a1m/wzJWr8y2FkV2VREOxQNJ3unBx70AbGBgFYI22eNi5Yi0sqm9xRDpfzvDP4Q1hnCtYhPfF6vgwHjqUYs/B5c1e7VJSJ+7ehEUHm6uEkBkBqqjgMNGvMBkxdA9jjDVU7BTeoN6QCdhoXXjZ8x4MwHVn7i2T5Wxy7eNffwSmbov7B0ZHrBrjOkNiDb0Lq+RhYnjAa8355viScRAdxniDwjSaxz61yXv0U8stRmSltAikItFwCnEZWtIn9tedWcnXF4dDHrUBqXnZWht6ddiXZohUj23BNYaC207RSQqYamsz35sqVNyZO6mTMgNMLm5Gzp9abe1pyat981cYlE0cpTG+DhiAjAdJI0mBvXLkTXvf5LZkkCNdPDKPCYgnFd6oGkhCZo2hU5Wu+zbWeXj5V9kd1+rILoPgdjxpQ10Sr3soXjvIooQ4="
+
+before_install:
+      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "UnseenLabs/libcsp"
+      description: "Build submitted via Travis CI"
+    notification_email: coverity@unseenlabs.space
+    build_command_prepend: "./waf configure  --with-os=posix --with-driver-usart=linux  --enable-rdp"
+    build_command:   "./waf build"
+    branch_pattern: coverity_scan
 
 script:
    - ./waf configure --with-os=posix --with-driver-usart=linux  --enable-rdp
