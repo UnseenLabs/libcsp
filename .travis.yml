@@ -21,7 +21,7 @@ addons:
 
 matrix:
   include:
-    # trusty gcc 5.4
+    # trusty gcc 4.8
     - os: linux
       addons:
         apt:
