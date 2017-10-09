@@ -20,6 +20,6 @@ addons:
     branch_pattern: coverity_scan
 
 script:
-   - ./waf configure --with-os=posix --with-driver-usart=linux  --enable-rdp
+   - ./waf configure --with-os=posix  --enable-rdp --enable-qos --enable-promisc --enable-crc32 --enable-hmac --enable-xtea --enable-bindings --enable-examples --enable-dedup --enable-if-kiss --enable-if-can --enable-if-zmqhub --enable-can-socketcan=linux --with-driver-usart=linux
    - ./waf build
  
